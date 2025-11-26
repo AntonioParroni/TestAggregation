@@ -1,0 +1,93 @@
+﻿using API.DTO;
+using API.Interfaces;
+using API.Model;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using API.DTO;
+using API.Interfaces;
+using API.Model;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+
+namespace API.Data;
+
+public class EmploymentRepository : IEmploymentRepository
+{
+    private readonly DataContext _context;
+    private readonly IMapper _mapper;
+    public EmploymentRepository(DataContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    // Aggregazione per Project + Employee (gruppo su entrambi)
+    public async Task<IEnumerable<Activities>> AggregationByProjectAndEmployeeAsync()
+    {
+        var query = _context.Activities
+            .AsNoTracking()
+            .Include(a => a.Project)
+            .Include(a => a.Employment)
+            .GroupBy(a => new { ProjectId = a.Project.ProjectId, ProjectName = a.Project.Name, EmployeeId = a.Employment.EmployeeId, EmployeeName = a.Employment.Name })
+            .Select(g => new Activities
+            {
+                // Popolo solo le entità correlate minime (Id + Name)
+                Project = new Projects { ProjectId = g.Key.ProjectId, Name = g.Key.ProjectName },
+                Employment = new Employment { EmployeeId = g.Key.EmployeeId, Name = g.Key.EmployeeName },
+                Hours = g.Sum(x => x.Hours),
+                // ActivityDate non rilevante per aggregazione: uso default(DateTime)
+                ActivityDate = default
+            });
+
+        return await query.ToListAsync();
+    }
+
+    // Aggregazione per Employee + Project (stesso risultato della precedente ma ordinamento diverso)
+    public async Task<IEnumerable<Activities>> AggregationByEmployeeAndProjectAsync()
+    {
+        var query = _context.Activities
+            .AsNoTracking()
+            .Include(a => a.Project)
+            .Include(a => a.Employment)
+            .GroupBy(a => new { EmployeeId = a.Employment.EmployeeId, EmployeeName = a.Employment.Name, ProjectId = a.Project.ProjectId, ProjectName = a.Project.Name })
+            .Select(g => new Activities
+            {
+                Project = new Projects { ProjectId = g.Key.ProjectId, Name = g.Key.ProjectName },
+                Employment = new Employment { EmployeeId = g.Key.EmployeeId, Name = g.Key.EmployeeName },
+                Hours = g.Sum(x => x.Hours),
+                ActivityDate = default
+            });
+
+        return await query.ToListAsync();
+    }
+
+    // "No aggregation" — proietta verso ActivitiesDTO usando AutoMapper (efficiente)
+    public async Task<IEnumerable<ActivitiesDTO>> NoAggregationAsync()
+    {
+        return await _context.Activities
+           .AsNoTracking()
+           .Include(a => a.Project)
+           .Include(a => a.Employment)
+           .ProjectTo<ActivitiesDTO>(_mapper.ConfigurationProvider)
+           .ToListAsync();
+    }
+
+    // Aggregazione per Project (solo somma delle ore per progetto)
+    public async Task<IEnumerable<Activities>> AggregationByProjectAsync()
+    {
+        var query = _context.Activities
+            .AsNoTracking()
+            .Include(a => a.Project)
+            .GroupBy(a => new { ProjectId = a.Project.ProjectId, ProjectName = a.Project.Name })
+            .Select(g => new Activities
+            {
+                Project = new Projects { ProjectId = g.Key.ProjectId, Name = g.Key.ProjectName },
+                Employment = null,
+                Hours = g.Sum(x => x.Hours),
+                ActivityDate = default
+            });
+
+        return await query.ToListAsync();
+    }
+}
