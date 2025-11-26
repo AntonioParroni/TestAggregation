@@ -6,7 +6,7 @@ namespace API.Interfaces;
 public interface IEmploymentRepository
 {
     Task<IEnumerable<ActivitiesDTO>> NoAggregationAsync();
-    Task<IEnumerable<Activities>> AggregationByProjectAsync();
+    Task<IEnumerable<ProjectAggregationDTO>> AggregationByProjectAsync();
     Task<IEnumerable<Activities>> AggregationByProjectAndEmployeeAsync();
     Task<IEnumerable<Activities>> AggregationByEmployeeAndProjectAsync();
 }

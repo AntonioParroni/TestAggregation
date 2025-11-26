@@ -8,29 +8,30 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class ActivitiesController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-
         private readonly IEmploymentRepository _employmentRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<ActivitiesController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IEmploymentRepository employmentRepository, IMapper mapper)
+        public ActivitiesController(ILogger<ActivitiesController> logger, IEmploymentRepository employmentRepository, IMapper mapper)
         {
             _logger = logger;
             _employmentRepository = employmentRepository;
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet(Name = "aggregation/default")]
         public async Task<IEnumerable<ActivitiesDTO>> GetAsync()
         {
             var cities = await _employmentRepository.NoAggregationAsync();
+            return cities;
+        }
+
+        [HttpGet("aggregation/by-project")]
+        public async Task<IEnumerable<ProjectAggregationDTO>> GetAggregationByProject()
+        {
+            var cities = await _employmentRepository.AggregationByProjectAsync();
             return cities;
         }
     }

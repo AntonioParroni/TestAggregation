@@ -43,6 +43,8 @@ public class EmploymentRepository : IEmploymentRepository
         return await query.ToListAsync();
     }
 
+
+
     // Aggregazione per Employee + Project (stesso risultato della precedente ma ordinamento diverso)
     public async Task<IEnumerable<Activities>> AggregationByEmployeeAndProjectAsync()
     {
@@ -74,18 +76,17 @@ public class EmploymentRepository : IEmploymentRepository
     }
 
     // Aggregazione per Project (solo somma delle ore per progetto)
-    public async Task<IEnumerable<Activities>> AggregationByProjectAsync()
+
+    public async Task<IEnumerable<ProjectAggregationDTO>> AggregationByProjectAsync()
     {
+        // Raggruppa per nome progetto e somma le ore lato database
         var query = _context.Activities
             .AsNoTracking()
-            .Include(a => a.Project)
-            .GroupBy(a => new { ProjectId = a.Project.ProjectId, ProjectName = a.Project.Name })
-            .Select(g => new Activities
+            .GroupBy(a => a.Project.Name)
+            .Select(g => new ProjectAggregationDTO
             {
-                Project = new Projects { ProjectId = g.Key.ProjectId, Name = g.Key.ProjectName },
-                Employment = null,
-                Hours = g.Sum(x => x.Hours),
-                ActivityDate = default
+                ProjectName = g.Key,
+                TotalHours = g.Sum(x => x.Hours)
             });
 
         return await query.ToListAsync();
