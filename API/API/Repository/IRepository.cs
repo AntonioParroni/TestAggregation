@@ -8,5 +8,5 @@ public interface IEmploymentRepository
     Task<IEnumerable<ActivitiesDTO>> NoAggregationAsync();
     Task<IEnumerable<ProjectAggregationDTO>> AggregationByProjectAsync();
     Task<IEnumerable<ProjectEmployeeAggregationDTO>> AggregationByProjectAndEmployeeAsync();
-    Task<IEnumerable<Activities>> AggregationByEmployeeAndProjectAsync();
+    Task<IEnumerable<EmployeeProjectAggregationDTO>> AggregationByEmployeeAndProjectAsync();
 }

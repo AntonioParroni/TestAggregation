@@ -43,6 +43,11 @@ namespace API.Controllers
             return cities;
         }
 
-        
+        [HttpGet("aggregation/by-employeeandproject")]
+        public async Task<IEnumerable<EmployeeProjectAggregationDTO>> GetAggregationByEmployeeAndProject()
+        {
+            var cities = await _employmentRepository.AggregationByEmployeeAndProjectAsync();
+            return cities;
+        }
     }
 }
