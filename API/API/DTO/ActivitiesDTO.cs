@@ -8,6 +8,6 @@ namespace API.DTO
         public string Project { get; set; }
         public string Employment { get; set; }
         public int Hours { get; set; }
-        public DateTime? Date { get; set; }
+        public DateOnly? Date { get; set; }
     }
 }

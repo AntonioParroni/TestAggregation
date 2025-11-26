@@ -11,7 +11,7 @@ public class AutoMapperProfiles : Profile
         CreateMap<Activities, ActivitiesDTO>()
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project.Name))
             .ForMember(dest => dest.Employment, opt => opt.MapFrom(src => src.Employment.Name))
-            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.ActivityDate));
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.ActivityDate == default ? (DateOnly?)null : DateOnly.FromDateTime(src.ActivityDate)));
 
         CreateMap<Employment, EmploymentDTO>();
         CreateMap<Projects, ProjectDTO>();
