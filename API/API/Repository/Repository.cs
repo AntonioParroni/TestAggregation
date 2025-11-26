@@ -22,22 +22,18 @@ public class EmploymentRepository : IEmploymentRepository
         _mapper = mapper;
     }
 
-    // Aggregazione per Project + Employee (gruppo su entrambi)
-    public async Task<IEnumerable<Activities>> AggregationByProjectAndEmployeeAsync()
+
+    // Aggregazione per Project + Employee (Project, Employee, TotalHours)
+    public async Task<IEnumerable<ProjectEmployeeAggregationDTO>> AggregationByProjectAndEmployeeAsync()
     {
         var query = _context.Activities
             .AsNoTracking()
-            .Include(a => a.Project)
-            .Include(a => a.Employment)
-            .GroupBy(a => new { ProjectId = a.Project.ProjectId, ProjectName = a.Project.Name, EmployeeId = a.Employment.EmployeeId, EmployeeName = a.Employment.Name })
-            .Select(g => new Activities
+            .GroupBy(a => new { ProjectName = a.Project.Name, EmployeeName = a.Employment.Name })
+            .Select(g => new ProjectEmployeeAggregationDTO
             {
-                // Popolo solo le entità correlate minime (Id + Name)
-                Project = new Projects { ProjectId = g.Key.ProjectId, Name = g.Key.ProjectName },
-                Employment = new Employment { EmployeeId = g.Key.EmployeeId, Name = g.Key.EmployeeName },
-                Hours = g.Sum(x => x.Hours),
-                // ActivityDate non rilevante per aggregazione: uso default(DateTime)
-                ActivityDate = default
+                Project = g.Key.ProjectName,
+                Employee = g.Key.EmployeeName,
+                TotalHours = g.Sum(x => x.Hours)
             });
 
         return await query.ToListAsync();
