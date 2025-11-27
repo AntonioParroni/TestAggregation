@@ -10,7 +10,8 @@ import { ManageComponent } from './components/manage/manage.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ActivityListComponent } from './components/no-aggregation/activity-list.component';
-import { ActivityByProjectListComponent } from './components/byproject/activity-list.component';
+import { ActivityByProjectListComponent } from './components/byproject/activitylist.component';
+import { ActivityByProjectAndEmployeeListComponent } from './components/byprojectandemployee/activitybyprojectandemployee-list.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
     component: ActivityByProjectListComponent,
     data: { title: 'ByProject', showInNav: true },
   },
+      {
+    path: 'byprojectandemployee',
+    component: ActivityByProjectAndEmployeeListComponent,
+    data: { title: 'ByProjectAndEmployee', showInNav: true },
+  },
   {
     path: '**',
     redirectTo: '',
@@ -41,7 +47,8 @@ const routes: Routes = [
     HomeComponent,
     ManageComponent,
     ActivityListComponent,
-    ActivityByProjectListComponent
+    ActivityByProjectListComponent,
+    ActivityByProjectAndEmployeeListComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
