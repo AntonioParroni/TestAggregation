@@ -1,4 +1,4 @@
-<h2>Activities</h2>
+<h2 class="ps-3">Activities</h2>
 
 <div *ngIf="loading">
   Loading...
@@ -16,10 +16,10 @@
 
   <tbody>
     <tr *ngFor="let a of activities">
-      <td>{{ a.project }}</td>
-      <td>{{ a.employment }}</td>
-      <td>{{ a.date }}</td>
-      <td>{{ a.hours }}</td>
+      <td class="ps-3">{{ a.project }}</td>
+      <td class="ps-3">{{ a.employment }}</td>
+      <td class="ps-3">{{ a.date }}</td>
+      <td class="ps-3">{{ a.hours }}</td>
     </tr>
   </tbody>
 </table>
