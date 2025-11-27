@@ -10,6 +10,7 @@ import { ManageComponent } from './components/manage/manage.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ActivityListComponent } from './components/no-aggregation/activity-list.component';
+import { ActivityByProjectListComponent } from './components/byproject/activity-list.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,11 @@ const routes: Routes = [
     path: 'manage',
     component: ActivityListComponent,
     data: { title: 'No Aggregation', showInNav: true },
+  },
+    {
+    path: 'byproject',
+    component: ActivityByProjectListComponent,
+    data: { title: 'ByProject', showInNav: true },
   },
   {
     path: '**',
@@ -34,7 +40,8 @@ const routes: Routes = [
     NavbarComponent,
     HomeComponent,
     ManageComponent,
-    ActivityListComponent
+    ActivityListComponent,
+    ActivityByProjectListComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
