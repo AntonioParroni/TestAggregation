@@ -17,7 +17,7 @@ export class ActivityListComponent implements OnInit {
   activities: ActivitiesDTO[] = [];
   loading = true;
 
-  private baseUrl = 'https://localhost:7268'; // Change to your API
+  private baseUrl = 'https://localhost:7268';
 
   constructor(private http: HttpClient) {}
 
