@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ActivityListComponent } from './components/no-aggregation/activity-list.component';
 import { ActivityByProjectListComponent } from './components/byproject/activitylist.component';
 import { ActivityByProjectAndEmployeeListComponent } from './components/byprojectandemployee/activitybyprojectandemployee-list.component';
+import { ActivityByEmployeeAndProjectListComponent } from './components/byemployeeandproject/activitybyprojectandemployee-list.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,11 @@ const routes: Routes = [
     component: ActivityByProjectAndEmployeeListComponent,
     data: { title: 'ByProjectAndEmployee', showInNav: true },
   },
+        {
+    path: 'bypemployeeandproject',
+    component: ActivityByEmployeeAndProjectListComponent,
+    data: { title: 'ByEmployeeAndProject', showInNav: true },
+  },
   {
     path: '**',
     redirectTo: '',
@@ -48,7 +54,8 @@ const routes: Routes = [
     ManageComponent,
     ActivityListComponent,
     ActivityByProjectListComponent,
-    ActivityByProjectAndEmployeeListComponent
+    ActivityByProjectAndEmployeeListComponent,
+    ActivityByEmployeeAndProjectListComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

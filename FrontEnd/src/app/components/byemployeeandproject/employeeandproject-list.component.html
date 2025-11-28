@@ -1,4 +1,4 @@
-<h2 class="ps-3">Aggregation By Project And Employee</h2>
+<h2 class="ps-3">Aggregation By Employee And Project</h2>
 
 <div *ngIf="loading">
   Loading...
@@ -7,16 +7,16 @@
 <table *ngIf="!loading" class="table table-bordered">
   <thead>
     <tr>
-      <th>Project</th>
       <th>Employee</th>
+      <th>Project</th>
       <th>Hours</th>
     </tr>
   </thead>
 
   <tbody>
     <tr *ngFor="let a of activities">
-      <td class="ps-3">{{ a.project }}</td>
       <td class="ps-3">{{ a.employee}}</td>
+      <td class="ps-3">{{ a.project }}</td>
       <td class="ps-3">{{ a.hours }}</td>
     </tr>
   </tbody>
