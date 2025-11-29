@@ -1,6 +1,5 @@
 ﻿using API.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace API.Data;
 

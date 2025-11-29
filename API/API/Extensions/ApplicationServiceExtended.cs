@@ -2,8 +2,6 @@
 using API.Helpers;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace API.Extensions;
 

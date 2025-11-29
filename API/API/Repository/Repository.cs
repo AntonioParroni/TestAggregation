@@ -1,14 +1,8 @@
 ﻿using API.DTO;
 using API.Interfaces;
-using API.Model;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using API.DTO;
-using API.Interfaces;
-using API.Model;
-using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
