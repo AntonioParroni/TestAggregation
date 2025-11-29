@@ -1,27 +1,29 @@
 <div class="d-flex justify-content-center align-items-center min-vh-100">
-  <div class="w-100">
-    <h2 class="ps-3 text-center fs-1 mb-4">Aggregation By Project And Employee</h2>
+  <div class="w-75">
+    <h2 class="text-center fs-1 mb-4">Aggregation By Project And Employee</h2>
 
-    <div *ngIf="loading">
+    <div *ngIf="loading" class="text-center">
       Loading...
     </div>
 
-    <table *ngIf="!loading" class="table table-bordered table-lg">
-      <thead>
-        <tr>
-          <th class="fs-5">Project</th>
-          <th class="fs-5">Employee</th>
-          <th class="fs-5">Hours</th>
-        </tr>
-      </thead>
+    <div *ngIf="!loading">
+      <table class="table table-bordered table-lg mx-auto" style="width: auto;">
+        <thead>
+          <tr>
+            <th class="fs-5">Project</th>
+            <th class="fs-5">Employee</th>
+            <th class="fs-5">Hours</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr *ngFor="let a of activities">
-          <td class="ps-3 fs-6">{{ a.project }}</td>
-          <td class="ps-3 fs-6">{{ a.employee}}</td>
-          <td class="ps-3 fs-6">{{ a.hours }}</td>
-        </tr>
-      </tbody>
-    </table>
+        <tbody>
+          <tr *ngFor="let a of activities">
+            <td class="ps-3 fs-6">{{ a.project }}</td>
+            <td class="ps-3 fs-6">{{ a.employee}}</td>
+            <td class="ps-3 fs-6">{{ a.hours }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

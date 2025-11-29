@@ -1,21 +1,27 @@
-<h2 class="ps-3">Aggregation By Project</h2>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="w-75">
+    <h2 class="text-center fs-1 mb-4">Aggregation By Project</h2>
 
-<div *ngIf="loading">
-  Loading...
+    <div *ngIf="loading" class="text-center">
+      Loading...
+    </div>
+
+    <div *ngIf="!loading">
+      <table class="table table-bordered table-lg mx-auto" style="width: auto;">
+        <thead>
+          <tr>
+            <th class="fs-5">Project</th>
+            <th class="fs-5">Hours</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let a of activities">
+            <td class="ps-3 fs-6">{{ a.projectName }}</td>
+            <td class="ps-3 fs-6">{{ a.totalHours}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-<table *ngIf="!loading" class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Project</th>
-      <th>Hours</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr *ngFor="let a of activities">
-      <td class="ps-3">{{ a.projectName }}</td>
-      <td class="ps-3">{{ a.totalHours }}</td>
-    </tr>
-  </tbody>
-</table>
